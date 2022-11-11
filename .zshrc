@@ -108,6 +108,14 @@ tmux_attach() {
     fi
 }
 
+forget_host() {
+    ssh-keygen -f "${HOME}/.ssh/known_hosts" -R "$1"
+    IP_ADDR=$(dig +short @nethserver $1)
+    if [ -n "$IP_ADDR" ]; then
+        ssh-keygen -f "${HOME}/.ssh/known_hosts" -R "$IP_ADDR"
+    fi
+}
+
 alias wfh="${HOME}/src/desy_wfh/desy_wfh.sh"
 alias gitdesy="git config --local author.email patrick.huesmann@desy.de && git config --local user.email patrick.huesmann@desy.de"
 alias gitprivate="git config --local author.email info@patrick-huesmann.de && git config --local user.email info@patrick-huesmann.de"
