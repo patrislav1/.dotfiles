@@ -108,6 +108,10 @@ tmux_attach() {
     fi
 }
 
+ipmbtool() {
+    ipmitool -I lan -H $1 -A NONE -B 0 -b 7 -T 0x82 -t ${@:2}
+}
+
 forget_host() {
     ssh-keygen -f "${HOME}/.ssh/known_hosts" -R "$1"
     IP_ADDR=$(dig +short @nethserver $1)
