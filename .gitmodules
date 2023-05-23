@@ -4,3 +4,6 @@
 [submodule ".config/kak/plugins/powerline.kak"]
 	path = .config/kak/plugins/powerline.kak
 	url = https://github.com/andreyorst/powerline.kak
+[submodule ".tmux"]
+	path = .tmux
+	url = https://github.com/gpakosz/.tmux.git
