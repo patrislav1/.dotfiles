@@ -120,6 +120,17 @@ forget_host() {
     fi
 }
 
+wic_img() {
+    # wic_img <compression_level> <image_name>
+    # compression_level: -0 for no compression, -9 for max compression
+    # image_name: Yocto image name
+    #
+    # e.g.: wic_img -6 zcu102-image-gigev-full
+
+    export XZ_DEFAULTS="--threads=0 $1"
+    wic create sdimage-bootpart -e $2 -c xz --no-fstab-update
+}
+
 alias wfh="${HOME}/src/desy_wfh/desy_wfh.sh"
 alias gitdesy="git config --local author.email patrick.huesmann@desy.de && git config --local user.email patrick.huesmann@desy.de"
 alias gitprivate="git config --local author.email info@patrick-huesmann.de && git config --local user.email info@patrick-huesmann.de"
