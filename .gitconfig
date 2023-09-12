@@ -15,3 +15,5 @@
 [init]
 	defaultBranch = main
 
+[core]
+	editor = vi
