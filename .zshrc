@@ -131,6 +131,7 @@ wic_img() {
     wic create sdimage-bootpart -e $2 -c xz --no-fstab-update
 }
 
+alias vi="nvim"
 alias wfh="${HOME}/src/desy_wfh/desy_wfh.sh"
 alias gitdesy="git config --local author.email patrick.huesmann@desy.de && git config --local user.email patrick.huesmann@desy.de"
 alias gitprivate="git config --local author.email info@patrick-huesmann.de && git config --local user.email info@patrick-huesmann.de"

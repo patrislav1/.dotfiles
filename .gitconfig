@@ -16,4 +16,4 @@
 	defaultBranch = main
 
 [core]
-	editor = vi
+	editor = nvim
