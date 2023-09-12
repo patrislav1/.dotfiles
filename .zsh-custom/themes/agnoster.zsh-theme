@@ -1,0 +1,1 @@
+../../.omz-agnoster-hostcolors/agnoster.zsh-theme

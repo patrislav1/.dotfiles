@@ -10,3 +10,6 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule ".omz-agnoster-hostcolors"]
+	path = .omz-agnoster-hostcolors
+	url = https://github.com/patrislav1/agnoster-hostcolors.git
