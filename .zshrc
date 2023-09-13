@@ -140,3 +140,6 @@ alias gitprivate="git config --local author.email info@patrick-huesmann.de && gi
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 complete -F _complete_alias config
 
+# for tmux
+export EDITOR="/usr/bin/nvim"
+export VISUAL="/usr/bin/nvim"
