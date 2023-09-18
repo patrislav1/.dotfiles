@@ -265,6 +265,10 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- Allow line wrap when using cursor keys
+vim.opt.whichwrap:append('<')
+vim.opt.whichwrap:append('>')
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
