@@ -13,3 +13,6 @@
 [submodule ".omz-agnoster-hostcolors"]
 	path = .omz-agnoster-hostcolors
 	url = https://github.com/patrislav1/agnoster-hostcolors.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = https://github.com/patrislav1/kickstart.nvim.git
