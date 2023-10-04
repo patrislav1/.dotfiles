@@ -132,6 +132,7 @@ wic_img() {
 }
 
 alias vi="nvim"
+alias v="nvim"
 alias wfh="${HOME}/src/desy_wfh/desy_wfh.sh"
 alias gitdesy="git config --local author.email patrick.huesmann@desy.de && git config --local user.email patrick.huesmann@desy.de"
 alias gitprivate="git config --local author.email info@patrick-huesmann.de && git config --local user.email info@patrick-huesmann.de"
