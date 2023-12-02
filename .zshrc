@@ -65,12 +65,14 @@ ZSH_THEME="agnoster"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/.zsh-custom"
 
+VI_MODE_SET_CURSOR=true
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+plugins=(git vi-mode fzf) # Run fzf *after* vi-mode, so C-r goes to fzf
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,6 +133,7 @@ wic_img() {
     wic create sdimage-bootpart -e $2 -c xz --no-fstab-update
 }
 
+alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
 alias wfh="${HOME}/src/desy_wfh/desy_wfh.sh"
@@ -142,8 +145,8 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 complete -F _complete_alias config
 
 # for tmux
-export EDITOR="/usr/bin/nvim"
-export VISUAL="/usr/bin/nvim"
+export EDITOR="vim"
+export VISUAL="vim"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.bin" ] ; then
