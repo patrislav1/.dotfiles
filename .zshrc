@@ -148,6 +148,9 @@ complete -F _complete_alias config
 export EDITOR="vim"
 export VISUAL="vim"
 
+# for xz
+export XZ_DEFAULTS="--threads=0 -6"
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
