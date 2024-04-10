@@ -155,15 +155,8 @@ export VISUAL="vim"
 export XZ_DEFAULTS="--threads=0 -6"
 
 # set PATH so it includes user's private bin's if they exist
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
-fi
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-if [ -d "$HOME/go/bin" ] ; then
-    PATH="$HOME/go/bin:$PATH"
-fi
-if [ -d "$HOME/.cargo/bin" ] ; then
-    PATH="$HOME/.cargo/bin:$PATH"
-fi
+for LOCALBIN in .bin .local/bin go/bin .cargo/bin .local/share/gem/ruby/3.0.0/bin; do
+    if [ -d "$HOME/$LOCALBIN" ] ; then
+        PATH="$HOME/$LOCALBIN:$PATH"
+    fi
+done
