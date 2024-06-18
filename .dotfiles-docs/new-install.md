@@ -32,6 +32,13 @@ network:
               - to: 192.168.1.0/24
 ```
 
+## email
+
+```
+sudo apt install thunderbird
+```
+* `https://it.desy.de/dienste/e_mail/mail_clients/thunderbird/index_ger.html`
+
 # Basic tools
 
 ```
@@ -116,6 +123,30 @@ sudo usermod -a -G sudo $USER
 ```
 
 Adding to groups requires not only a logout, but a full reboot for some reason :-(
+
+## dmesg permission
+
+```
+sudo vi /etc/sysctl.conf
+kernel.dmesg_restrict = 0
+```
+
+# Filesystems
+
+## CIFS client
+
+This is required to fix "CIFS: Unable to determine destination address"
+
+```
+sudo apt-get install cifs-utils
+```
+
+## SFTP client
+
+```
+sudo apt install sshfs
+sudo vi /etc/fuse.conf # uncomment user_allow_other
+```
 
 # GUI
 
