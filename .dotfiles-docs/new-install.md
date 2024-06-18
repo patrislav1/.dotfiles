@@ -12,11 +12,33 @@
 
 * run `visudo`, add user account to "User privilege specification"
 
+## lab network
+
+```
+echo "network: {config: disabled}" > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+vi /etc/netplan/01-network-manager-all.yaml
+
+# Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  renderer: NetworkManager
+
+  ethernets:
+      enp4s0:
+          dhcp4: true
+          dhcp4-overrides:
+              use-routes: false
+          routes:
+              - to: 192.168.1.0/24
+```
+
 # Basic tools
 
+```
 sudo apt install git fzf tmux zsh curl
 sudo apt install golang build-essential python3
 sudo apt install cmake clang-format clangd
+```
 
 # Shell
 
@@ -50,3 +72,57 @@ sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get install neovim
 ```
+
+# Advanced stuff
+
+## Yocto
+
+```
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool file locales libacl1
+sudo locale-gen en_US.UTF-8
+```
+
+## LVM
+
+```
+sudo apt install lvm2
+```
+
+## Docker
+
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+## Groups
+
+```
+sudo usermod -a -G docker $USER
+sudo usermod -a -G dialout $USER
+sudo usermod -a -G adm $USER
+sudo usermod -a -G sudo $USER
+```
+
+Adding to groups requires not only a logout, but a full reboot for some reason :-(
+
+# GUI
+
+```
+sudo apt install gnome-tweaks
+```
+
+* Enter tweaks
+  * Keyboard -> Additional Layout Options -> Caps Lock behavior -> Make Caps Lock an additional ESC
+  * 
