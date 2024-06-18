@@ -375,7 +375,11 @@ tmux_conf_update_plugins_on_reload=true
 #set -g @plugin 'tmux-plugins/tmux-resurrect'
 #set -g @plugin 'tmux-plugins/tmux-continuum'
 #set -g @continuum-restore 'on'
+bind H capture-pane -e \; run "tmux save-buffer - | $HOME/go/bin/ansisvg -fontname 'UbuntuMono Nerd Font Mono' -fontsize 16 -charboxsize 8x17 -grid --colorscheme Argonaut > $HOME/Pictures/tmux-$(date +%F_%T).svg"; delete-buffer
 
+set-option -g status-interval 5
+set-option -g automatic-rename on
+set-option -g automatic-rename-format '#{b:pane_current_path}'
 
 # -- custom variables ----------------------------------------------------------
 
@@ -404,6 +408,4 @@ tmux_conf_update_plugins_on_reload=true
 # "$@"
 # # /!\ do not remove the previous line
 set -as terminal-overrides ',*:Hls=\E]8;id=%p1%s;%p2%s\E\\:Hlr=\E]8;;\E\\'
-
-bind H capture-pane -e \; run "tmux save-buffer - | $HOME/go/bin/ansisvg -fontname 'UbuntuMono Nerd Font Mono' -fontsize 16 -charboxsize 8x16 -grid > $HOME/Pictures/tmux-$(date +%F_%T).svg"; delete-buffer
 
