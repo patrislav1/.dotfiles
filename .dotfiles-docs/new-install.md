@@ -45,6 +45,7 @@ sudo apt install thunderbird
 sudo apt install git fzf tmux zsh curl
 sudo apt install golang build-essential python3
 sudo apt install cmake clang-format clangd
+sudo apt install tree htop
 ```
 
 # Shell
@@ -64,6 +65,9 @@ git sparse-checkout add patched-fonts/UbuntuMono
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 mkdir -p .local/bin
 ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
+cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 ```
 restart shell
 ```
@@ -85,8 +89,23 @@ sudo apt-get install neovim
 ## Yocto
 
 ```
-sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool file locales libacl1
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 python3-subunit zstd liblz4-tool file locales libacl1 repo
 sudo locale-gen en_US.UTF-8
+```
+
+for xsct
+```
+wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb && sudo dpkg -i libtinfo5_6.4-2_amd64.deb && rm -f libtinfo5_6.4-2_amd64.deb
+
+wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.4-2_amd64.deb && sudo dpkg -i libncurses5_6.4-2_amd64.deb && rm -f libncurses5_6.4-2_amd64.deb 
+```
+
+(NOTE: DON'T DO THIS, USE DOCKER INSTEAD) (downgrade gcc to work around broken native recipe)
+```
+sudo apt install gcc-12 g++-12
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 12 --slave /usr/bin/g++ g++ /usr/bin/g++-12 --slave /usr/bin/gcov gcov /usr/bin/gcov-12
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 13 --slave /usr/bin/g++ g++ /usr/bin/g++-13 --slave /usr/bin/gcov gcov /usr/bin/gcov-13
+sudo update-alternatives --config gcc
 ```
 
 ## LVM
@@ -148,6 +167,12 @@ sudo apt install sshfs
 sudo vi /etc/fuse.conf # uncomment user_allow_other
 ```
 
+## NFS
+
+```
+sudo apt install nfs-common nfs-kernel-server
+```
+
 # GUI
 
 ```
@@ -156,4 +181,7 @@ sudo apt install gnome-tweaks
 
 * Enter tweaks
   * Keyboard -> Additional Layout Options -> Caps Lock behavior -> Make Caps Lock an additional ESC
-  * 
+  
+```
+gsettings set org.gnome.desktop.calendar show-weekdate true
+```
