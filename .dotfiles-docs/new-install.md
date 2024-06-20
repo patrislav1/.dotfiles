@@ -176,7 +176,7 @@ sudo apt install nfs-common nfs-kernel-server
 # GUI
 
 ```
-sudo apt install gnome-tweaks
+sudo apt install gnome-tweaks file-roller
 ```
 
 * Enter tweaks
