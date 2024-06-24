@@ -82,6 +82,9 @@ sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get install neovim
+
+sudo apt install ripgrep # for telescope
+sudo apt install npm     # for pyright
 ```
 
 # Advanced stuff
