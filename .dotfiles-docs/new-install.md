@@ -48,6 +48,17 @@ sudo apt install cmake clang-format clangd
 sudo apt install tree htop
 ```
 
+## label printer
+
+```
+sudo apt install gettext libgd-dev libusb-1.0-0-dev
+git clone https://git.familie-radermacher.ch/linux/ptouch-print.git
+cd ptouch-print
+./build.sh
+cd build
+sudo make install
+```
+
 # Shell
 
 ## Font
