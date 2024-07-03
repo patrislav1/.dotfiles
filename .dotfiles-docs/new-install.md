@@ -46,6 +46,7 @@ sudo apt install git fzf tmux zsh curl
 sudo apt install golang build-essential python3
 sudo apt install cmake clang-format clangd
 sudo apt install tree htop
+sudo apt install bat && sudo ln -s batcat /usr/bin/bat
 ```
 
 ## label printer
