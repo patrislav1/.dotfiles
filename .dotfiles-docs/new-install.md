@@ -188,6 +188,11 @@ sudo vi /etc/fuse.conf # uncomment user_allow_other
 sudo apt install nfs-common nfs-kernel-server
 ```
 
+* Embedded systems development
+
+  In `/etc/nfs.conf`, enable UDP with `udp=y` in the `[nfsd]` section.
+  (U-Boot uses UDP to mount NFS shares)
+
 # GUI
 
 ```
