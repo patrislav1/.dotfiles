@@ -162,8 +162,7 @@ for LOCALBIN in .bin .local/bin go/bin .cargo/bin .local/share/gem/ruby/3.0.0/bi
 done
 
 export NVM_DIR="$HOME/.nvm"
-
-if [ -d "$HOME/$LOCALBIN" ] ; then
+if [ -d "$NVM_DIR" ] ; then
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
