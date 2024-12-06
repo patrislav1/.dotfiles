@@ -133,6 +133,13 @@ wic_img() {
     wic create sdimage-bootpart -e $2 -c xz --no-fstab-update
 }
 
+venv() {    
+    if [ ! -d ".venv" ] ; then
+        python3 -m venv .venv
+    fi
+    source .venv/bin/activate
+}
+
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
@@ -161,8 +168,11 @@ for LOCALBIN in .bin .local/bin go/bin .cargo/bin .local/share/gem/ruby/3.0.0/bi
     fi
 done
 
+# enable nvm (if present)
 export NVM_DIR="$HOME/.nvm"
 if [ -d "$NVM_DIR" ] ; then
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
+
+
