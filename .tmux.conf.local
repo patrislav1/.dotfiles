@@ -316,8 +316,12 @@ tmux_conf_theme_clock_style="24"
 #   - false (default)
 # on macOS, this requires installing reattach-to-user-namespace, see README.md
 # on Linux, this requires xsel or xclip
-tmux_conf_copy_to_os_clipboard=true
+# tmux_conf_copy_to_os_clipboard=true
+set-option -g set-clipboard on
+set-option -g allow-passthrough on
 
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "~/.local/osc52-yank.sh"
+bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel "~/.local/osc52-yank.sh"
 
 # -- user customizations -------------------------------------------------------
 # this is the place to override or undo settings

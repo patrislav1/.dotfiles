@@ -133,11 +133,15 @@ wic_img() {
     wic create sdimage-bootpart -e $2 -c xz --no-fstab-update
 }
 
-venv() {    
+venv() {
     if [ ! -d ".venv" ] ; then
         python3 -m venv .venv
     fi
     source .venv/bin/activate
+}
+
+osc52() {
+    printf "\033]52;c;%s\007" "$(cat | base64 | tr -d '\n')"
 }
 
 alias vim="nvim"
