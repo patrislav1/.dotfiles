@@ -144,6 +144,16 @@ osc52() {
     printf "\033]52;c;%s\007" "$(cat | base64 | tr -d '\n')"
 }
 
+remote_ws() {
+    if [ $# -ne 2 ]; then
+        echo "usage: $0 REMOTE_HOST REMOTE_NIC"
+        return 1
+    fi
+    REMOTE_HOST=$1
+    REMOTE_NIC=$2
+    ssh ${REMOTE_HOST} "/usr/bin/tcpdump -i ${REMOTE_NIC} -U -w - 'not port 22'" | wireshark -i - -k
+}
+
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
