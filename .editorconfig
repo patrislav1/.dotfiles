@@ -1,0 +1,66 @@
+# This is a top-level project
+root = true
+
+# Defaults for all files. Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Tab indentation for Makefiles
+[{Makefile,*.mk}]
+indent_style = tab
+
+# 2-space indentation for tcl and vhdl
+# as per https://fpgafw.pages.desy.de/docs-pub/doc/vhdl/naming.html
+[*.{tcl,vhd}]
+indent_style = space
+indent_size = 2
+
+# 2-space indentation for asciidoc / markdown
+[*.{adoc,md}]
+indent_style = space
+indent_size = 2
+
+# 2-space indentation for YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# 4-space indentation for Jenkinsfiles
+[{Jenkinsfile,Jenkinsfile.*}]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for shell scripts
+[*.sh]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for device tree files
+[*.{dts,dtsi}]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for BitBake files
+[*.{bb,bbappend,bbclass}]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for Python files
+# TODO: does this clash with language specific formatters, e.g. ruff or black?
+[*.py]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for CMake files
+[{CMakeLists.txt,*.cmake}]
+indent_style = space
+indent_size = 4
+
+# 4-space indentation for C/C++ files
+# TODO: does this clash with language specific formatters, e.g. clang-format?
+[*.{c,cpp,cc,h,hpp}]
+indent_style = space
+indent_size = 4
