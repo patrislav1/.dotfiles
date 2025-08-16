@@ -64,3 +64,13 @@ indent_size = 4
 [*.{c,cpp,cc,h,hpp}]
 indent_style = space
 indent_size = 4
+
+[*.{groovy,xml,toml}]
+indent_style = space
+indent_size = 4
+
+[*.lua]
+indent_style = space
+indent_size = 2
+
+
