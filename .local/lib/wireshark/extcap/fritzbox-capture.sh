@@ -6,7 +6,7 @@
 
 # Put/symlink this file in ~/.wireshark/extcap/
 # https://www.wireshark.org/docs/wsdg_html_chunked/ChCaptureExtcap.html
-
+source $(dirname "$(readlink -f "$0")")/fritzbox-interfaces.sh
 set -euo pipefail
 
 # Configurable variables
@@ -26,7 +26,7 @@ FRITZ_BOX_IP=$(ip -j route show default | jq -r '.[0].gateway')
 # 4-135 = AP2 (5 GHz, ath1) - Interface 1
 # 4-133 = AP (2.4 GHz, ath0) - Interface 1
 # 4-128 = WLAN Management Traffic - Interface 0
-FRITZ_BOX_IFACE="1-lan"
+# FRITZ_BOX_IFACE="1-lan"
 
 FRITZ_BOX_SID=
 
@@ -59,35 +59,34 @@ showhelp() {
     # and not use absolute paths to common commands.
     local PROG=$(realpath "${BASH_SOURCE[0]}")
     cat <<HELP
-Wireshark - fritzbox-capture v$EXTCAP_VERSION
+    Wireshark - fritzbox-capture v$EXTCAP_VERSION
 
-Usage:
- $PROG --extcap-interfaces
- $PROG --extcap-interface=fritzbox-capture --extcap-dlts
- $PROG --extcap-interface=fritzbox-capture --extcap-config
- $PROG --extcap-interface=fritzbox-capture --arg-sid [sid] --fifo myfifo --capture
- $PROG --extcap-interface=fritzbox-capture --arg-sid [sid] --fifo myfifo --capture --extcap-capture-filter 'host 1.1.1.1'
- $PROG --extcap-interface=fritzbox-capture --arg-ip [fritzbox ip] --arg-iface [interface] --arg-sid [sid] --fifo myfifo --capture
-Options:
-        --extcap-interfaces: list the extcap Interfaces
-        --extcap-dlts: list the DLTs
-        --extcap-interface <iface>: specify the extcap interface
-        --extcap-config: list the additional configuration for an interface
-        --capture: run the capture
-        --extcap-capture-filter <filter>: the capture filter
-        --fifo <file>: dump data to file or fifo
-        --help: print this help
-        --version: print the version
-        --arg-ip <ip>: IP address of FRITZ!Box router. Defaults to: $FRITZ_BOX_IP
-        --arg-iface <iface>: Network interface. Defaults to: $FRITZ_BOX_IFACE
-                             Visit https://$FRITZ_BOX_IP/?lp=cap and inspect the value of "Start" buttons to find them.
-                             Some values are also listed at https://github.com/jpluimers/fritzcap/blob/master/fritzcap-interfaces-table.md
-        --arg-sid <sid>: URL with SID or just SID. Log in to the FRITZ!Box and copy a link containing sid. Required.
-        --enable-fritz-sid-validation: Enable check of SID validity using FRITZ!Box endpoint
-        --enable-logging: Enable logging
-        --log-file <file>: Location of log file. Defaults to: $DEBUG_LOG_FILE
+    Usage:
+    $PROG --extcap-interfaces
+    $PROG --extcap-interface=fritzbox-capture --extcap-dlts
+    $PROG --extcap-interface=fritzbox-capture --extcap-config
+    $PROG --extcap-interface=fritzbox-capture --arg-sid [sid] --fifo myfifo --capture
+    $PROG --extcap-interface=fritzbox-capture --arg-sid [sid] --fifo myfifo --capture --extcap-capture-filter 'host 1.1.1.1'
+    $PROG --extcap-interface=fritzbox-capture --arg-ip [fritzbox ip] --arg-sid [sid] --fifo myfifo --capture
+    Options:
+    --extcap-interfaces: list the extcap Interfaces
+    --extcap-dlts: list the DLTs
+    --extcap-interface <iface>: specify the extcap interface
+    --extcap-config: list the additional configuration for an interface
+    --capture: run the capture
+    --extcap-capture-filter <filter>: the capture filter
+    --fifo <file>: dump data to file or fifo
+    --help: print this help
+    --version: print the version
+    --arg-ip <ip>: IP address of FRITZ!Box router. Defaults to: $FRITZ_BOX_IP
+    Visit https://$FRITZ_BOX_IP/?lp=cap and inspect the value of "Start" buttons to find them.
+    Some values are also listed at https://github.com/jpluimers/fritzcap/blob/master/fritzcap-interfaces-table.md
+    --arg-sid <sid>: URL with SID or just SID. Log in to the FRITZ!Box and copy a link containing sid. Required.
+    --enable-fritz-sid-validation: Enable check of SID validity using FRITZ!Box endpoint
+    --enable-logging: Enable logging
+    --log-file <file>: Location of log file. Defaults to: $DEBUG_LOG_FILE
 
-For usage within Wireshark, see https://github.com/Rob--W/fritzbox-extcap-wireshark#readme
+    For usage within Wireshark, see https://github.com/Rob--W/fritzbox-extcap-wireshark#readme
 HELP
 }
 
@@ -99,7 +98,9 @@ showversion() {
 # --extcap-interfaces
 extcap_interfaces() {
     echo "extcap {version=$EXTCAP_VERSION}" # {help=helpurl} if I have one.
-    echo "interface {value=fritzbox-capture}{display=FRITZ!Box capture}"
+    for key in "${!d[@]}"; do
+        echo "interface {value=${d[$key]}}{display=FRITZ!Box $key}"
+    done
 }
 
 # --extcap-dlts
@@ -112,11 +113,10 @@ extcap_dlts() {
 # --extcap_config
 extcap_config() {
     echo "arg {number=0}{call=--arg-ip}{display=FRITZ!Box IP address}{type=string}{tooltip=FRITZ!Box IP address}{default=$FRITZ_BOX_IP}"
-    echo "arg {number=1}{call=--arg-iface}{display=FRITZ!Box interface}{type=string}{tooltip=FRITZ!Box capture interface, see https://$FRITZ_BOX_IP/?lp=cap for more info (and inspect the buttons to see the value) }{default=$FRITZ_BOX_IFACE}"
-    echo "arg {number=2}{call=--arg-sid}{display=FRITZ!Box sid or URL with sid}{type=string}{tooltip=The FRITZ!Box sid - after logging, find and copy a link containing sid}"
-    echo "arg {number=3}{call=--enable-logging}{display=Enable logging for debugging}{type=boolflag}"
-    echo "arg {number=4}{call=--log-file}{display=Location of log file}{type=string}{default=$DEBUG_LOG_FILE}"
-    echo "arg {number=5}{call=--enable-fritz-sid-validation}{display=Enable FRITZ!BOX SID valdidation}{type=boolflag}{default=1}"
+    echo "arg {number=1}{call=--arg-sid}{display=FRITZ!Box sid or URL with sid}{type=string}{tooltip=The FRITZ!Box sid - after logging, find and copy a link containing sid}"
+    echo "arg {number=2}{call=--enable-logging}{display=Enable logging for debugging}{type=boolflag}"
+    echo "arg {number=3}{call=--log-file}{display=Location of log file}{type=string}{default=$DEBUG_LOG_FILE}"
+    echo "arg {number=4}{call=--enable-fritz-sid-validation}{display=Enable FRITZ!BOX SID valdidation}{type=boolflag}{default=1}"
 }
 
 extcap_capture_filter_validation() {
@@ -124,7 +124,7 @@ extcap_capture_filter_validation() {
     # - non-zero exit code only = greenish = unknown
     # - empty stdout = green = valid
     # - non-empty stdout = red = invalid
-    # 
+    #
     # Minimal eth capture file with 0 packets
     local DUMMY_PCAP_DATA='4\xcd\xb2\xa1\x02\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x08\x00\x00i\x00\x00\x00'
     if ! printf "$DUMMY_PCAP_DATA" | "$TCPDUMP_BIN" -r- -- "$CAPTURE_FILTER" 2>/dev/null ; then
@@ -158,11 +158,7 @@ while [[ $# -gt 0 ]] ; do
             ACTION=extcap_config
             ;;
         --extcap-interface)
-            # We only support one interface (and also use that for easier arg parsing)
-            if [[ "$2" != fritzbox-capture ]] ; then
-                echo "Unsupported interface: $2 (expected fritzbox-capture)"
-                exit 1
-            fi
+            FRITZ_BOX_IFACE=$2
             shift
             ;;
         --capture)
@@ -179,10 +175,6 @@ while [[ $# -gt 0 ]] ; do
             ;;
         --arg-ip)
             FRITZ_BOX_IP=$2
-            shift
-            ;;
-        --arg-iface)
-            FRITZ_BOX_IFACE=$2
             shift
             ;;
         --arg-sid)
@@ -294,12 +286,12 @@ if [[ "$FRITZ_BOX_SID_VAL" == "1" ]] ; then
     log_debug "Verifying that sid is valid using FRITZ!BOX endpoint"
 
     RESPONSE_TEXT=$("$CURL_BIN" --silent --insecure "https://${FRITZ_BOX_IP}/login_sid.lua?version=2&sid=${FRITZ_BOX_SID}")
-    
+
     if [[ ! "$RESPONSE_TEXT" =~ "<SID>${FRITZ_BOX_SID}</SID>" ]] ; then
         echo_error_and_exit "Invalid sid ($FRITZ_BOX_SID), please log in again at https://${FRITZ_BOX_IP}"
     fi
 else
-    
+
     log_debug "Verifying that sid is valid"
 
     # Verify that SID is OK
@@ -353,7 +345,7 @@ if [ -z "$CAPTURE_FILTER" ] ; then
 else
     log_debug "Starting capture with filter"
     # With a filter, it's more involved... We want to be able to kill curl ASAP when capturing stops.
-    # When curl is just piped to tcpdump, we would only be able to kill tcpdump. 
+    # When curl is just piped to tcpdump, we would only be able to kill tcpdump.
     # and curl would stay alive until it unsuccessfully tries to write to the pipe.
     #
     # But if we kill curl, and Wireshark closes the FIFO pipe, then tcpdump will exit automatically too.
