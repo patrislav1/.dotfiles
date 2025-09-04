@@ -74,7 +74,7 @@ VI_MODE_SET_CURSOR=true
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vi-mode fzf) # Run fzf *after* vi-mode, so C-r goes to fzf
 
-source $ZSH/oh-my-zsh.sh
+    source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -101,14 +101,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-tmux_attach() {
-    if [ ! -n "$1" ]; then
-        echo "Hostname not given"
-    else
-        ssh $1 -t tmux a
-    fi
-}
 
 ipmbtool() {
     ipmitool -I lan -H $1 -A NONE -B 0 -b 7 -T 0x82 -t ${@:2}
@@ -152,6 +144,15 @@ remote_ws() {
     REMOTE_HOST=$1
     REMOTE_NIC=$2
     ssh ${REMOTE_HOST} "/usr/bin/tcpdump -i ${REMOTE_NIC} -U -w - 'not port 22'" | wireshark -i - -k
+}
+
+tmuxa() {
+    session=$(tmux list-sessions -F "#{session_name}" | fzf --height=10 --reverse)
+    if [ -n "$session" ]; then
+        tmux attach -t "$session"
+    else
+        echo "No session selected."
+    fi
 }
 
 alias vim="nvim"
