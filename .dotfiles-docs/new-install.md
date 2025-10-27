@@ -4,7 +4,9 @@
 
 * `sudo apt install sssd`
 * use `/etc/sssd/sssd.conf` from `https://it.desy.de/services/directory_services/ldap/index_eng.html`
-* add `override_homedir = /home/%u` to `domain/LDAP" section of /etc/sssd.conf
+* add `override_homedir = /home/%u` to `domain/LDAP` section of /etc/sssd.conf
+* also disable STARTTLS for recent sssd/ldap versions: `ldap_id_use_start_tls = False`
+* to cache credentials (prevents loss of login when offline): `cache_credentials = true`
 * `chmod 0400 sssd.conf`
 * run `pam-auth-update`, select "Create home directory on login"
 
