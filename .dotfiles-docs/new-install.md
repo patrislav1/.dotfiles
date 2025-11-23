@@ -207,4 +207,5 @@ sudo apt install gnome-tweaks file-roller
   
 ```
 gsettings set org.gnome.desktop.calendar show-weekdate true
+gsettings set org.gnome.SessionManager logout-prompt false
 ```
