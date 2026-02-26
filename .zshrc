@@ -136,6 +136,9 @@ osc52() {
     printf "\033]52;c;%s\007" "$(cat | base64 | tr -d '\n')"
 }
 
+# chgrp tcpdump /usr/bin/tcpdump && chmod 750 /usr/bin/tcpdump
+# setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
+# chmod -aG tcpdump $USER
 remote_ws() {
     if [ $# -ne 2 ]; then
         echo "usage: $0 REMOTE_HOST REMOTE_NIC"
@@ -190,4 +193,5 @@ if [ -d "$NVM_DIR" ] ; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
-
+# For FWKLINUX
+export FWK_YOCTO_CACHE_DIR=${HOME}/.cache/fwklinux
