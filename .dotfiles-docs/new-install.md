@@ -99,6 +99,7 @@ sudo update-alternatives --config x-terminal-emulator
 sudo snap install nvim --classic
 sudo apt install ripgrep # for telescope
 sudo apt install npm     # for pyright
+npm config set prefix ~/.local && npm install -g tree-sitter-cli
 ```
 
 # Advanced stuff
