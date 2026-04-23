@@ -176,6 +176,9 @@ complete -F _complete_alias config
 export EDITOR="vim"
 export VISUAL="vim"
 
+# for sudoedit
+export SUDO_EDITOR="/snap/bin/nvim"
+
 # for xz
 export XZ_DEFAULTS="--threads=0 -6"
 
