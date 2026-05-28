@@ -198,3 +198,9 @@ fi
 
 # For FWKLINUX
 export FWK_YOCTO_CACHE_DIR=${HOME}/.cache/fwklinux
+
+# For maki.sh
+if [ -d "$HOME/.config/maki" ] ; then
+    export OLLAMA_HOST="https://assistant.desy.de/api"
+    export OLLAMA_API_KEY="$(cat $HOME/.config/maki/ollama_api_key)"
+fi
