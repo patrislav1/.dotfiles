@@ -1,0 +1,52 @@
+# The DESY Assistant, declared as a custom provider rather than through the
+# built-in ollama slug. Only supports_thinking, requires_thinking and
+# thinking_fields overlay onto a built-in slug, so supports_vision has to live
+# on a custom one. The endpoint is an Open WebUI backend: it serves the
+# OpenAI-compatible API only, and implements no Ollama-native route
+# (/api/show, /api/tags) for Maki to read model capabilities from.
+# A DESY_BASE_URL environment variable overrides base_url if ever needed.
+[desy]
+display_name = "DESY Assistant"
+protocol = "openai"
+base_url = "https://assistant.desy.de/api/v1"
+api_key_env = "DESY_API_KEY"
+default_model = "desy/desy-assistant"
+
+# The windows differ per model. They are not published by /api/v1/models, which
+# carries no meta.params; the values below were read back from the server's own
+# vLLM error message when an oversized max_tokens is requested, and the window is
+# shared between input and output. The three models are served by two
+# deployments (vllm-0.27.1-tp4 for desy-assistant, vllm-0.31.0-tp4-ep for the
+# DeepSeek pair, which is why a request for reasoning is answered as coding).
+# max_output_tokens has no server-side cap below the window, so it is a policy
+# choice: it is the part of the window Maki reserves for the reply.
+
+[[desy.models]]
+id = "desy-assistant"
+tier = "strong"
+supports_vision = true
+context_window = 262144
+max_output_tokens = 32000
+
+[[desy.models]]
+id = "reasoning"
+tier = "strong"
+supports_thinking = true
+supports_vision = false
+context_window = 1048576
+max_output_tokens = 65536
+
+[desy.models.thinking_fields]
+off = { reasoning_effort = "none" }
+low = { reasoning_effort = "low" }
+medium = { reasoning_effort = "high" }
+high = { reasoning_effort = "high" }
+xhigh = { reasoning_effort = "xhigh" }
+max = { reasoning_effort = "max" }
+
+[[desy.models]]
+id = "coding"
+tier = "strong"
+supports_vision = false
+context_window = 1048576
+max_output_tokens = 65536
