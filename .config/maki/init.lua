@@ -1,4 +1,7 @@
 maki.setup({
+  ui = {
+    splash_animation = false,
+  },
   always_workflow = true,
   always_thinking = "high",
   provider = {
